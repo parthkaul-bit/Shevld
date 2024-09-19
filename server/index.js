@@ -1,6 +1,23 @@
 console.log("Open Notion");
 console.log("Make todo list");
 
+/* 
+todo make the  Groceries DB API
+Groceries Table
+
+| **Field** | **Type** | **Description** |
+| --- | --- | --- |
+| `_id` | ObjectId | Unique identifier for the grocery item |
+| `name` | String | Name of the grocery item |
+| `imageUrl` | String | URL for the grocery item image | // this is fetched from unsplash api.
+| `purchaseDate` | Date | The date when the grocery was purchased |
+| `shelfLife` | Number | Estimated shelf life in days | // fetched from an third party API
+| `createdAt` | Date | Date when the grocery item was added |
+
+GET /api/groceries: Retrieve a list of groceries.
+POST /api/groceries: Add a new grocery item.
+GET /api/groceries/:id: Retrieve a specific grocery item by ID.
+*/
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -9,6 +26,7 @@ require("dotenv").config();
 
 const authRoutes = require("./routes/authRoute");
 const userRoutes = require("./routes/userRoute");
+const groceryRoutes = require("./routes/groceryRoute");
 
 const app = express();
 
@@ -25,6 +43,7 @@ mongoose
 // Mount routes
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/groceries", groceryRoutes);
 
 // Default route
 app.get("/", (req, res) => {
