@@ -11,9 +11,9 @@ const createGrocery = async (groceryData) => {
   return await grocery.save();
 };
 
-// Get a grocery by ID
-const findGroceryById = async (id) => {
-  return await Grocery.findById(id);
+// Find a grocery item by its ID
+const findGroceryById = async (groceryId) => {
+  return await Grocery.findById(groceryId);
 };
 
 module.exports = { findAllGroceries, createGrocery, findGroceryById };

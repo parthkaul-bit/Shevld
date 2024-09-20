@@ -1,23 +1,17 @@
-console.log("Open Notion");
-console.log("Make todo list");
+// console.log("Open Notion");
+// console.log("Make todo list");
 
 /* 
-todo make the  Groceries DB API
-Groceries Table
+todo make the  Grocery list API
+*4. Grocery List*
 
-| **Field** | **Type** | **Description** |
-| --- | --- | --- |
-| `_id` | ObjectId | Unique identifier for the grocery item |
-| `name` | String | Name of the grocery item |
-| `imageUrl` | String | URL for the grocery item image | // this is fetched from unsplash api.
-| `purchaseDate` | Date | The date when the grocery was purchased |
-| `shelfLife` | Number | Estimated shelf life in days | // fetched from an third party API
-| `createdAt` | Date | Date when the grocery item was added |
-
-GET /api/groceries: Retrieve a list of groceries.
-POST /api/groceries: Add a new grocery item.
-GET /api/groceries/:id: Retrieve a specific grocery item by ID.
+- **GET /api/grocery-list/:flatId**: Retrieve the grocery list for a specific flat.
+- **POST /api/grocery-list/:flatId**: Add an item to the grocery list.
+- **PUT /api/grocery-list/:flatId/:itemId**: Update an item in the grocery list.
+- **DELETE /api/grocery-list/:flatId/:itemId**: Remove an item from the grocery list.
+- POST /api/grocery-list/:flatId/purchase: Mark items as purchased and add them to the kitchen
 */
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -27,6 +21,8 @@ require("dotenv").config();
 const authRoutes = require("./routes/authRoute");
 const userRoutes = require("./routes/userRoute");
 const groceryRoutes = require("./routes/groceryRoute");
+const flatRoutes = require("./routes/flatRoute");
+const kitchenRoutes = require("./routes/kitchenRoute");
 
 const app = express();
 
@@ -44,6 +40,8 @@ mongoose
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/groceries", groceryRoutes);
+app.use("/api/flats", flatRoutes);
+app.use("/api/kitchen", kitchenRoutes);
 
 // Default route
 app.get("/", (req, res) => {
