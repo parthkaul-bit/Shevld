@@ -1,17 +1,3 @@
-// console.log("Open Notion");
-// console.log("Make todo list");
-
-/* 
-todo make the  Grocery list API
-*4. Grocery List*
-
-- **GET /api/grocery-list/:flatId**: Retrieve the grocery list for a specific flat.
-- **POST /api/grocery-list/:flatId**: Add an item to the grocery list.
-- **PUT /api/grocery-list/:flatId/:itemId**: Update an item in the grocery list.
-- **DELETE /api/grocery-list/:flatId/:itemId**: Remove an item from the grocery list.
-- POST /api/grocery-list/:flatId/purchase: Mark items as purchased and add them to the kitchen
-*/
-
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -23,6 +9,8 @@ const userRoutes = require("./routes/userRoute");
 const groceryRoutes = require("./routes/groceryRoute");
 const flatRoutes = require("./routes/flatRoute");
 const kitchenRoutes = require("./routes/kitchenRoute");
+const groceryListRoutes = require("./routes/groceryListRoute");
+const recipeRoutes = require("./routes/recipeRoute");
 
 const app = express();
 
@@ -42,6 +30,8 @@ app.use("/api/user", userRoutes);
 app.use("/api/groceries", groceryRoutes);
 app.use("/api/flats", flatRoutes);
 app.use("/api/kitchen", kitchenRoutes);
+app.use("/api/groceryList", groceryListRoutes);
+app.use("/api/recipes", recipeRoutes);
 
 // Default route
 app.get("/", (req, res) => {
