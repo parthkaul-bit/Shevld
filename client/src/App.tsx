@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Onboarding from "./pages/Onboarding";
 import Kitchen from "./pages/Kitchen";
 import AddGroceryToKitchen from "./pages/AddGroceryToKitchen";
 import GroceryList from "./pages/GroceryList";
@@ -7,6 +6,7 @@ import AddGroceryToList from "./pages/AddGroceryToList";
 import Recipes from "./pages/Recipes";
 import RecipeDetail from "./pages/RecipeDetail";
 import NotFound from "./pages/NotFound";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
       {/* Define routes */}
       <Routes>
         {/* Landing / Onboarding */}
-        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/" element={<LandingPage />} />
 
         {/* Kitchen routes */}
         <Route path="/kitchen" element={<Kitchen />} />
