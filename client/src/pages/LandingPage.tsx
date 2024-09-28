@@ -1,7 +1,28 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Hero from "../public/hero.svg";
+import Login from "../components/ui/LoginModal"; // Updated Login component
+import Signup from "../components/ui/SignupModal"; // Updated Signup component
+import FeatureGrid from "@/components/ui/FeatureGrid";
 
 const LandingPage = () => {
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isSignupOpen, setIsSignupOpen] = useState(false);
+
+  const openLoginModal = () => {
+    setIsLoginOpen(true);
+    setIsSignupOpen(false); // Ensure signup is closed when login opens
+  };
+
+  const openSignupModal = () => {
+    setIsSignupOpen(true);
+    setIsLoginOpen(false); // Ensure login is closed when signup opens
+  };
+
+  const closeLoginModal = () => setIsLoginOpen(false);
+  const closeSignupModal = () => setIsSignupOpen(false);
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
@@ -15,6 +36,7 @@ const LandingPage = () => {
           <Button
             variant="outline"
             className="border-gray-600 text-gray-600 hover:bg-gray-100 px-4 py-2 sm:px-6 sm:py-2 text-sm sm:text-base"
+            onClick={openLoginModal}
           >
             Log in
           </Button>
@@ -32,7 +54,10 @@ const LandingPage = () => {
             <p className="text-lg sm:text-xl text-gray-700 mb-6">
               Simplify grocery shopping for you and your flatmates.
             </p>
-            <Button className="bg-gray-800 text-white hover:bg-gray-700 rounded-md w-40 h-12 text-base">
+            <Button
+              className="bg-yellow-400 text-black hover:bg-yellow-500 rounded-3xl w-40 h-12 text-base"
+              onClick={openSignupModal}
+            >
               Start for free
             </Button>
           </div>
@@ -47,6 +72,49 @@ const LandingPage = () => {
           </div>
         </div>
       </main>
+      <FeatureGrid />
+
+      {/* Login Modal */}
+      <Dialog open={isLoginOpen} onOpenChange={closeLoginModal}>
+        <DialogContent>
+          <Login />
+          <div className="mt-4 text-center">
+            <span>
+              Don't have an account?
+              <span
+                className="hover:underline text-yellow-600 ml-1 cursor-pointer"
+                onClick={() => {
+                  closeLoginModal();
+                  openSignupModal();
+                }}
+              >
+                Sign up
+              </span>
+            </span>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Signup Modal */}
+      <Dialog open={isSignupOpen} onOpenChange={closeSignupModal}>
+        <DialogContent>
+          <Signup />
+          <div className="mt-4 text-center">
+            <span>
+              Already have an account?
+              <span
+                className="hover:underline text-yellow-600 ml-1 cursor-pointer"
+                onClick={() => {
+                  closeSignupModal();
+                  openLoginModal();
+                }}
+              >
+                Log in
+              </span>
+            </span>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
