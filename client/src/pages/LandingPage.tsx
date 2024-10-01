@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Hero from "../public/hero.svg";
-import Login from "../components/ui/LoginModal"; // Updated Login component
-import Signup from "../components/ui/SignupModal"; // Updated Signup component
+import Login from "../components/ui/Login";
+import Signup from "../components/ui/Signup";
 import FeatureGrid from "@/components/ui/FeatureGrid";
 
 const LandingPage = () => {
@@ -12,12 +12,12 @@ const LandingPage = () => {
 
   const openLoginModal = () => {
     setIsLoginOpen(true);
-    setIsSignupOpen(false); // Ensure signup is closed when login opens
+    setIsSignupOpen(false);
   };
 
   const openSignupModal = () => {
     setIsSignupOpen(true);
-    setIsLoginOpen(false); // Ensure login is closed when signup opens
+    setIsLoginOpen(false);
   };
 
   const closeLoginModal = () => setIsLoginOpen(false);
@@ -55,7 +55,7 @@ const LandingPage = () => {
               Simplify grocery shopping for you and your flatmates.
             </p>
             <Button
-              className="bg-yellow-400 text-black hover:bg-yellow-500 rounded-3xl w-40 h-12 text-base"
+              className="bg-green-700 text-white hover:bg-green-900 rounded-3xl w-40 h-12 text-base"
               onClick={openSignupModal}
             >
               Start for free

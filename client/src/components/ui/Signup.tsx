@@ -2,15 +2,33 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { signup } from "@/api/authService";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
-  const handleSignup = (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Signing up with:", { name, email, password });
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await signup(name, email, password);
+      console.log("Signed up successfully:", response);
+      localStorage.setItem("token", response.token);
+
+      // Redirect to kitchen page
+      navigate("/kitchen");
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -18,6 +36,7 @@ const Signup = () => {
       <h2 className="text-2xl font-bold text-black">
         Get Started! Your kitchen, your way
       </h2>
+      {error && <p className="text-red-600">{error}</p>}
       <div>
         <Label htmlFor="name" className="mb-2 block text-gray-800">
           Name
@@ -60,8 +79,9 @@ const Signup = () => {
       <Button
         type="submit"
         className="w-full mt-4 bg-yellow-500 hover:bg-yellow-600"
+        disabled={loading}
       >
-        Sign up
+        {loading ? "Signing up..." : "Sign up"}
       </Button>
     </form>
   );

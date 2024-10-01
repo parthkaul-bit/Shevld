@@ -5,7 +5,7 @@ const FeatureGrid = () => {
     <div className="p-4 w-full max-w-5xl mx-auto">
       <h2 className="text-3xl font-bold text-center mb-8">Key Features</h2>
       <div className="grid grid-cols-3 md:grid-cols-3 gap-6">
-        <Card className="md:col-span-2 bg-yellow-100 h-72">
+        <Card className="md:col-span-1 bg-yellow-100 h-72">
           <CardHeader>
             <CardTitle>Collaborate for Seamless Kitchen Management</CardTitle>
           </CardHeader>
@@ -17,7 +17,7 @@ const FeatureGrid = () => {
           </CardContent>
         </Card>
 
-        <Card className="md:col-span-1 bg-blue-100 h-72">
+        <Card className="md:col-span-2 bg-blue-100 h-72">
           <CardHeader>
             <CardTitle>Smart Shopping Lists</CardTitle>
           </CardHeader>
@@ -28,7 +28,7 @@ const FeatureGrid = () => {
           </CardContent>
         </Card>
 
-        <Card className="md:col-span-1 bg-purple-100 h-72">
+        <Card className="md:col-span-2 bg-purple-100 h-72">
           <CardHeader>
             <CardTitle>Inventory Tracking</CardTitle>
           </CardHeader>
@@ -39,7 +39,7 @@ const FeatureGrid = () => {
           </CardContent>
         </Card>
 
-        <Card className="md:col-span-2 bg-green-100 h-72">
+        <Card className="md:col-span-1 bg-green-100 h-72">
           <CardHeader>
             <CardTitle>Smart Shopping Lists</CardTitle>
           </CardHeader>

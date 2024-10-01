@@ -8,31 +8,31 @@ import RecipeDetail from "./pages/RecipeDetail";
 import NotFound from "./pages/NotFound";
 import LandingPage from "./pages/LandingPage";
 
-function App() {
+export default function App() {
   return (
     <Router>
-      {/* Define routes */}
-      <Routes>
-        {/* Landing / Onboarding */}
-        <Route path="/" element={<LandingPage />} />
+      <div className="pb-16">
+        {/* Add padding to the bottom to account for the nav bar */}
+        <Routes>
+          {/* Landing */}
+          <Route path="/" element={<LandingPage />} />
 
-        {/* Kitchen routes */}
-        <Route path="/kitchen" element={<Kitchen />} />
-        <Route path="/kitchen/add" element={<AddGroceryToKitchen />} />
+          {/* Kitchen routes */}
+          <Route path="/kitchen" element={<Kitchen />} />
+          <Route path="/kitchen/add" element={<AddGroceryToKitchen />} />
 
-        {/* Grocery List routes */}
-        <Route path="/grocery-list" element={<GroceryList />} />
-        <Route path="/grocery-list/add" element={<AddGroceryToList />} />
+          {/* Grocery List routes */}
+          <Route path="/grocery-list" element={<GroceryList />} />
+          <Route path="/grocery-list/add" element={<AddGroceryToList />} />
 
-        {/* Recipes routes */}
-        <Route path="/recipes" element={<Recipes />} />
-        <Route path="/recipes/:id" element={<RecipeDetail />} />
+          {/* Recipes routes */}
+          <Route path="/recipes" element={<Recipes />} />
+          <Route path="/recipes/:id" element={<RecipeDetail />} />
 
-        {/* 404 Not Found */}
-        <Route path="/*" element={<NotFound />} />
-      </Routes>
+          {/* 404 Not Found */}
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
+      </div>
     </Router>
   );
 }
-
-export default App;

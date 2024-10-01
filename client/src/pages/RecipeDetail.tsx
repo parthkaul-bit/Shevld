@@ -1,5 +1,12 @@
+import BottomNavBar from "@/components/ui/BottomNavBar";
+
 const RecipeDetail = () => {
-  return <div>RecipeDetail</div>;
+  return (
+    <div>
+      RecipeDetail
+      <BottomNavBar />
+    </div>
+  );
 };
 
 export default RecipeDetail;
