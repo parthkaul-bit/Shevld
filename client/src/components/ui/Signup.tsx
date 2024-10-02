@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signup } from "@/api/authService";
 import { useNavigate } from "react-router-dom";
+import { useUserContext } from "@/contexts/UserContext";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -12,6 +13,7 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { dispatch } = useUserContext();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,9 +22,15 @@ const Signup = () => {
     try {
       const response = await signup(name, email, password);
       console.log("Signed up successfully:", response);
-      localStorage.setItem("token", response.token);
+      const { user, token } = response;
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", token);
 
-      // Redirect to kitchen page
+      // Dispatch the login action to update the context
+      dispatch({
+        type: "LOGIN",
+        payload: { user, token },
+      });
       navigate("/kitchen");
     } catch (err: any) {
       setError(err.response?.data?.message || "Something went wrong");

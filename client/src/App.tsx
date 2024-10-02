@@ -7,12 +7,15 @@ import Recipes from "./pages/Recipes";
 import RecipeDetail from "./pages/RecipeDetail";
 import NotFound from "./pages/NotFound";
 import LandingPage from "./pages/LandingPage";
+import Navbar from "./components/ui/Navbar";
+import BottomNavBar from "./components/ui/BottomNavBar";
 
 export default function App() {
   return (
     <Router>
       <div className="pb-16">
         {/* Add padding to the bottom to account for the nav bar */}
+        <Navbar />
         <Routes>
           {/* Landing */}
           <Route path="/" element={<LandingPage />} />
@@ -32,6 +35,7 @@ export default function App() {
           {/* 404 Not Found */}
           <Route path="/*" element={<NotFound />} />
         </Routes>
+        <BottomNavBar />
       </div>
     </Router>
   );

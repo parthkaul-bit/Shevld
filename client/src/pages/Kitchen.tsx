@@ -16,8 +16,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import Navbar from "@/components/ui/Navbar";
-import { useUserContext } from "@/contexts/UserContext";
 
 interface KitchenItem {
   name: string;
@@ -120,11 +118,9 @@ const Kitchen: React.FC = () => {
     },
   ]);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState<boolean>(false);
-  const { state } = useUserContext();
 
   return (
     <div className="container mx-auto p-4 pb-20">
-      {state.user && <Navbar />}
       <div className="relative mb-6">
         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input placeholder="Search items..." className="pl-8" />
