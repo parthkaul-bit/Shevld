@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { motion, AnimatePresence } from "framer-motion";
-import Navbar from "@/components/ui/Navbar";
 
 interface GroceryItem {
   id: string;
@@ -46,24 +45,24 @@ const GroceryItem: React.FC<GroceryItemProps> = ({
     exit={{ opacity: 0, y: -50 }}
     transition={{ duration: 0.3 }}
   >
-    <Card className="mb-6">
-      <CardContent className="p-6">
-        <div className="flex items-center space-x-4">
+    <Card className="mb-4 shadow-sm border border-gray-200">
+      <CardContent className="p-4">
+        <div className="flex items-center space-x-3">
           <Checkbox
             checked={checked}
             onCheckedChange={onToggle}
-            className="h-6 w-6 rounded-full"
+            className="h-5 w-5 rounded-full"
           />
-          <div className="flex-1 space-y-1">
+          <div className="flex-1 space-y-0.5">
             <h3
-              className={`text-lg font-semibold transition-all duration-300 ${
+              className={`text-base font-medium transition-all duration-300 ${
                 checked ? "line-through text-gray-400" : ""
               }`}
             >
               {name}
             </h3>
-            <p className="text-sm text-gray-500">Quantity: {quantity}</p>
-            <div className="flex items-center space-x-2 text-sm text-gray-400">
+            <p className="text-xs text-gray-500">Quantity: {quantity}</p>
+            <div className="flex items-center space-x-1 text-xs text-gray-400">
               <User className="h-4 w-4" />
               <span>Added by {addedBy}</span>
             </div>
@@ -74,7 +73,7 @@ const GroceryItem: React.FC<GroceryItemProps> = ({
             className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
             onClick={onDelete}
           >
-            <Trash2 className="h-5 w-5" />
+            <Trash2 className="h-4 w-4" />
           </Button>
         </div>
       </CardContent>
@@ -167,7 +166,7 @@ const GroceryList: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [user, setUser] = useState<{ name: string } | null>({
     name: "John Doe",
-  }); // Simulated user state
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -233,21 +232,8 @@ const GroceryList: React.FC = () => {
     );
   };
 
-  const handleAddItem = (newItem: Omit<GroceryItem, "checked" | "id">) => {
-    const id = Math.random().toString(36).substr(2, 9);
-    setGroceryItems((prevItems) => [
-      ...prevItems,
-      { ...newItem, checked: false, id },
-    ]);
-  };
-
   const handleDeleteItem = (id: string) => {
     setGroceryItems((prevItems) => prevItems.filter((item) => item.id !== id));
-  };
-
-  const handleLogout = () => {
-    setUser(null);
-    navigate("/");
   };
 
   const filteredItems = groceryItems.filter((item) =>
@@ -258,54 +244,49 @@ const GroceryList: React.FC = () => {
   const boughtItems = filteredItems.filter((item) => item.checked);
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="container mx-auto p-4 sm:p-6 pb-24 max-w-2xl">
-        <div className="mb-6">
-          <Input
-            placeholder="Search items..."
-            className="w-full"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+    <div className="min-h-screen bg-gray-100 font-inter">
+      <div className="container mx-auto p-4 sm:p-6 pb-24 max-w-6xl">
+        <header className="mb-8 ">
+          <h1 className="text-3xl font-semibold text-green-700">
+            Our Grocery List
+          </h1>
+        </header>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h2 className="text-lg mb-4 text-green-700">TO BUY &#x1F6D2;</h2>
+            <AnimatePresence>
+              {toBuyItems.map((item) => (
+                <GroceryItem
+                  key={item.id}
+                  {...item}
+                  onToggle={() => handleToggle(item.id)}
+                  onDelete={() => handleDeleteItem(item.id)}
+                />
+              ))}
+            </AnimatePresence>
+            {toBuyItems.length === 0 && (
+              <p className="text-center text-gray-500">No items to buy.</p>
+            )}
+          </div>
+
+          <div>
+            <h2 className="text-lg mb-4 text-green-700">BOUGHT &#x2705;</h2>
+            <AnimatePresence>
+              {boughtItems.map((item) => (
+                <GroceryItem
+                  key={item.id}
+                  {...item}
+                  onToggle={() => handleToggle(item.id)}
+                  onDelete={() => handleDeleteItem(item.id)}
+                />
+              ))}
+            </AnimatePresence>
+            {boughtItems.length === 0 && (
+              <p className="text-center text-gray-500">No items bought yet.</p>
+            )}
+          </div>
         </div>
-
-        <h2 className="text-xl sm:text-2xl font-bold mb-4 text-green-700">
-          To Buy
-        </h2>
-        <AnimatePresence>
-          {toBuyItems.map((item) => (
-            <GroceryItem
-              key={item.id}
-              {...item}
-              onToggle={() => handleToggle(item.id)}
-              onDelete={() => handleDeleteItem(item.id)}
-            />
-          ))}
-        </AnimatePresence>
-        {toBuyItems.length === 0 && (
-          <p className="text-center text-sm sm:text-base text-gray-500 mb-8">
-            No items to buy.
-          </p>
-        )}
-
-        <h2 className="text-xl sm:text-2xl font-bold mb-4 mt-8 text-green-700">
-          Bought
-        </h2>
-        <AnimatePresence>
-          {boughtItems.map((item) => (
-            <GroceryItem
-              key={item.id}
-              {...item}
-              onToggle={() => handleToggle(item.id)}
-              onDelete={() => handleDeleteItem(item.id)}
-            />
-          ))}
-        </AnimatePresence>
-        {boughtItems.length === 0 && (
-          <p className="text-center text-sm sm:text-base text-gray-500">
-            No items bought yet.
-          </p>
-        )}
 
         <Button
           className="fixed right-4 bottom-4 sm:right-8 sm:bottom-8 md:right-80 md:bottom-24 rounded-full shadow-lg h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16"
@@ -314,11 +295,6 @@ const GroceryList: React.FC = () => {
         >
           <Plus className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
         </Button>
-        <AddGroceryDialog
-          isOpen={isAddDialogOpen}
-          setIsOpen={setIsAddDialogOpen}
-          onAdd={handleAddItem}
-        />
       </div>
     </div>
   );
