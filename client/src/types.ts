@@ -16,4 +16,17 @@ export interface GroceryItem {
     setIsOpen: (isOpen: boolean) => void;
     onAdd: (item: Omit<GroceryItem, "checked" | "id">) => void;
   }
-  
+
+// kitchen types
+export interface KitchenItem {
+  id: string;
+  name: string;
+  quantity: number;
+  image: string;
+  expirationDate: string;
+}
+
+export interface KitchenItemCardProps extends KitchenItem {
+  onDelete: () => void;
+  onUpdate: (updatedItem: KitchenItem) => void;
+}
