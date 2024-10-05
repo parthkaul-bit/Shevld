@@ -1,9 +1,7 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
-import { Clock, Users, ChefHat, ArrowRight } from "lucide-react";
+import { Clock, Users, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -27,59 +25,48 @@ interface KitchenItem {
   image: string;
 }
 
-const RecipeCard: React.FC<Recipe> = ({
+function RecipeCard({
+  id,
   name,
   description,
   cookTime,
   servings,
   image,
-}) => {
+}: Recipe) {
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.8 }}
-      transition={{ duration: 0.3 }}
-      className="w-full"
-    >
-      <Card className="w-full overflow-hidden">
-        <CardContent className="p-0">
-          <div className="relative h-48">
-            <img
-              src={image}
-              alt={name}
-              className="w-full h-full object-cover"
-            />
-            <Badge
-              className="absolute top-2 right-2 bg-green-500 text-white"
-              variant="secondary"
-            >
-              Uses expiring ingredients
-            </Badge>
-          </div>
-          <div className="p-4">
-            <h3 className="font-semibold text-lg mb-2">{name}</h3>
-            <p className="text-sm text-gray-500 mb-4">{description}</p>
-            <div className="flex justify-between items-center mb-4">
-              <Badge variant="secondary">
-                <Clock className="mr-1 h-3 w-3" /> {cookTime} mins
-              </Badge>
-              <Badge variant="secondary">
-                <Users className="mr-1 h-3 w-3" /> {servings} servings
-              </Badge>
+    <Link to={`/recipe-detail/${id}`}>
+      <Card className="overflow-hidden group relative transition-transform transform hover:scale-105">
+        <div className="relative h-[300px]">
+          <img src={image} alt={name} className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+          <Button
+            variant="default"
+            className="flex items-center text-white px-4 py-2 rounded-lg shadow-md transition-colors duration-200 bg-green-600 hover:bg-green-700"
+          >
+            View Recipe
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+          <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+            <h3 className="text-lg font-semibold mb-1">{name}</h3>
+            <p className="text-sm text-white/80 mb-2 line-clamp-2">
+              {description}
+            </p>
+            <div className="flex items-center justify-between text-sm text-white/80">
+              <div className="flex items-center">
+                <Clock className="w-4 h-4 mr-1" />
+                {cookTime} mins
+              </div>
+              <div className="flex items-center">
+                <Users className="w-4 h-4 mr-1" />
+                {servings} servings
+              </div>
             </div>
-            <Link to={`/recipe-detail/${name}`}>
-              <Button className="w-full mt-4" variant="link">
-                View Recipe <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
           </div>
-        </CardContent>
+        </div>
       </Card>
-    </motion.div>
+    </Link>
   );
-};
+}
 
 const Recipes: React.FC = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -209,22 +196,24 @@ const Recipes: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               <AnimatePresence>
                 {relatedRecipes.map((recipe) => (
-                  <RecipeCard key={recipe.id} {...recipe} />
+                  <motion.div
+                    key={recipe.id}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.3 }}
+                    className="w-full"
+                  >
+                    <RecipeCard {...recipe} />
+                  </motion.div>
                 ))}
               </AnimatePresence>
             </div>
-
-            {relatedRecipes.length === 0 && (
-              <p className="text-center text-gray-500 mt-8">
-                No recipes found for expiring ingredients.
-              </p>
-            )}
           </>
         ) : (
-          <div className="text-center text-gray-500 mt-8">
-            <ChefHat className="mx-auto h-12 w-12 mb-4" />
-            <p>No ingredients are expiring soon. Check back later!</p>
-          </div>
+          <p className="text-lg text-gray-700">
+            No expiring items in your kitchen. Keep cooking!
+          </p>
         )}
       </div>
     </div>

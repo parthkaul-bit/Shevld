@@ -1,4 +1,3 @@
-// KitchenItemCard.tsx
 import React, { useState } from "react";
 import { Trash2, Edit, Check, MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
