@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
+const http = require("http");
 
 const authRoutes = require("./routes/authRoute");
 const userRoutes = require("./routes/userRoute");
@@ -11,6 +12,8 @@ const flatRoutes = require("./routes/flatRoute");
 const kitchenRoutes = require("./routes/kitchenRoute");
 const groceryListRoutes = require("./routes/groceryListRoute");
 const recipeRoutes = require("./routes/recipeRoute");
+const { Server } = require("socket.io");
+const { handleSocketConnection } = require("./sockets/socketHandlers");
 
 const app = express();
 
@@ -32,6 +35,17 @@ app.use("/api/flats", flatRoutes);
 app.use("/api/kitchen", kitchenRoutes);
 app.use("/api/groceryList", groceryListRoutes);
 app.use("/api/recipes", recipeRoutes);
+
+// Create HTTP server
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+// Handle WebSocket connections
+handleSocketConnection(io);
 
 // Default route
 app.get("/", (req, res) => {

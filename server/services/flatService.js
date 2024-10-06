@@ -20,6 +20,27 @@ class FlatService {
     }
     return await flatRepository.removeUserFromFlat(flatId, userId);
   }
+
+  async inviteUserToFlat(userId, flatId) {
+    const flat = await flatRepository.findFlatById(flatId);
+    if (!flat) {
+      throw new Error("Flat not found");
+    }
+
+    const userToInvite = await userRepository.findUserById(userId);
+    if (!userToInvite) {
+      throw new Error("User not found");
+    }
+
+    // Add the user to the flat's user list if not already added
+    if (!flat.users.includes(userId)) {
+      flat.users.push(userId);
+      await flatRepository.saveFlat(flat);
+      return `User ${userToInvite.name} invited to the flat`;
+    } else {
+      throw new Error("User is already a member of this flat");
+    }
+  }
 }
 
 module.exports = new FlatService();

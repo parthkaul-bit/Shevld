@@ -31,3 +31,15 @@ exports.removeUserFromFlat = async (req, res) => {
     res.status(404).json({ message: err.message });
   }
 };
+
+exports.inviteUserToFlat = async (req, res) => {
+  const { userId, flatId } = req.body;
+
+  try {
+    const message = await flatService.inviteUserToFlat(userId, flatId);
+    return res.status(200).json({ message });
+  } catch (error) {
+    console.error("Error inviting user:", error);
+    return res.status(404).json({ message: error.message });
+  }
+};

@@ -18,6 +18,7 @@ interface User {
 interface UserState {
   user: User | null;
   token: string | null;
+  // flatId: string | null;
 }
 
 // Define action types
