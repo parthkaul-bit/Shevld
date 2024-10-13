@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import LandingPage from "./pages/LandingPage";
 import Navbar from "./components/ui/Navbar";
 import BottomNavBar from "./components/ui/BottomNavBar";
+import JoinFlat from "./components/ui/JoinFlat";
 
 export default function App() {
   return (
@@ -15,21 +16,13 @@ export default function App() {
       <div>
         <Navbar />
         <Routes>
-          {/* Landing */}
           <Route path="/" element={<LandingPage />} />
-
-          {/* Kitchen routes */}
           <Route path="/kitchen" element={<Kitchen />} />
           <Route path="/kitchen/add" element={<AddGroceryToKitchen />} />
-
-          {/* Grocery List routes */}
           <Route path="/grocery-list" element={<GroceryList />} />
-
-          {/* Recipes routes */}
           <Route path="/recipes" element={<Recipes />} />
           <Route path="/recipes/:id" element={<RecipeDetail />} />
-
-          {/* 404 Not Found */}
+          <Route path="/join-flat" element={<JoinFlat />} />{" "}
           <Route path="/*" element={<NotFound />} />
         </Routes>
         <BottomNavBar />
