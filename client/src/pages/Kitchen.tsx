@@ -92,7 +92,7 @@ const Kitchen: React.FC = () => {
               name={item.name}
               quantity={item.quantity}
               image={item.image}
-              expirationDate={item.expirationDate} // Pass expiration date
+              expirationDate={item.expirationDate}
               onDelete={() => handleDeleteItem(item.id)}
               onUpdate={(updatedItem) => handleUpdateItem(updatedItem)}
             />

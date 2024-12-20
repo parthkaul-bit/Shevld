@@ -48,7 +48,7 @@ const KitchenItemCard: React.FC<KitchenItemCardProps> = ({
       transition={{ duration: 0.3 }}
       className="w-full"
     >
-      <Card className="w-full overflow-hidden rounded-none">
+      <Card className="w-full overflow-hidden rounded-xl gap-10">
         <CardContent className="p-0">
           <div className="relative h-48">
             <img
