@@ -7,7 +7,15 @@ const grocerySchema = new mongoose.Schema({
     required: true,
   },
   quantity: { type: Number, required: true },
-  expirationDate: { type: Date, required: true },
+  expirationDate: {
+    type: Date,
+    required: true,
+    default: () => {
+      const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + 7);
+      return currentDate;
+    },
+  },
   imageUrl: { type: String, required: true },
   addedBy: {
     type: mongoose.Schema.Types.ObjectId,

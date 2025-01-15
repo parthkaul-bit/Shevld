@@ -1,11 +1,20 @@
 const mongoose = require("mongoose");
 
 const grocerySchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  groceryId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Grocery",
+    required: true,
+  },
+  quantity: { type: Number, required: true },
+  expirationDate: { type: Date, required: true },
   imageUrl: { type: String, required: true },
-  purchaseDate: { type: Date, required: true },
-  shelfLife: { type: Number, required: true, default: 7 },
-  createdAt: { type: Date, default: Date.now },
+  addedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  addedAt: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model("Grocery", grocerySchema);
